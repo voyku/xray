@@ -63,7 +63,7 @@ function certificate_renewal() {
    sed -i "s/xxx/${domain}/g" ${cert_renewsh}
    chmod 755 /etc/ssl/private/cert_renew.sh
    echo -e "0 1 1 * *   bash /etc/ssl/private/xray-cert-renew.sh" >> /var/spool/cron/crontabs/root 
-   print_ok "已证书自动更新"
+   print_ok "已设置证书自动更新"
    print_ok "vless://b7662d12-d48a-4ab8-8834-9864a01592b3@${domain}:443?flow=xtls-rprx-direct&encryption=none&security=xtls&type=tcp&headerType=none&host=${domain}#${domain}"
 }
 
