@@ -5,7 +5,7 @@
 function generate_certificate() {
   read -rp "请输入你的域名信息(eg: www.wulabing.com):" domain
   cert_sh="/root/cert.sh"
-  wget -O cert.sh https://raw.githubusercontent.com/gcp5678/xray/main/cert_dns.sh
+  wget -O cert.sh https://raw.githubusercontent.com/voyku/xray/main/cert_dns.sh
   sed -i "s/xxx/${domain}/g" ${cert_sh}
   chmod 755 cert.sh && ./cert.sh
   nginx_install
@@ -22,7 +22,7 @@ function nginx_install() {
   cd /var/www/website/html/ && rm -rf webxyar && rm -rf xray_web
 
   nginx_conf="/etc/nginx/conf.d/${domain}.conf"
-  cd /etc/nginx/conf.d/ && wget -O ${domain}.conf https://raw.githubusercontent.com/gcp5678/xray/main/125125.conf
+  cd /etc/nginx/conf.d/ && wget -O ${domain}.conf https://raw.githubusercontent.com/voyku/xray/main/125125.conf
   sed -i "s/xxx/${domain}/g" ${nginx_conf}
   judge "Nginx 配置 修改"
   systemctl restart nginx
@@ -36,7 +36,7 @@ function xray_install() {
 }
 
 function configure_xray() {
-  cd /usr/local/etc/xray/ && rm -rf config.json && wget -O config.json "https://raw.githubusercontent.com/gcp5678/xray/main/config.json"
+  cd /usr/local/etc/xray/ && rm -rf config.json && wget -O config.json "https://raw.githubusercontent.com/voyku/xray/main/config.json"
   judge "Xray配置修改"
   restart_all
 }
@@ -48,7 +48,7 @@ function restart_all() {
 
 function certificate_renewal() {
    cert_renewsh="/etc/ssl/private/cert_renew.sh"
-   cd /etc/ssl/private/ && wget -O cert_renew.sh https://raw.githubusercontent.com/gcp5678/xray/main/cert_renew.sh
+   cd /etc/ssl/private/ && wget -O cert_renew.sh https://raw.githubusercontent.com/voyku/xray/main/cert_renew.sh
    sed -i "s/xxx/${domain}/g" ${cert_renewsh}
    chmod 755 /etc/ssl/private/cert_renew.sh
    judge "证书自动更新，输入crontab -e，添加0 1 1 * *   bash /etc/ssl/private/xray-cert-renew.sh到crontab "
