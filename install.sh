@@ -24,26 +24,26 @@ function nginx_install() {
   nginx_conf="/etc/nginx/conf.d/${domain}.conf"
   cd /etc/nginx/conf.d/ && wget -O ${domain}.conf https://raw.githubusercontent.com/voyku/xray/main/125125.conf
   sed -i "s/xxx/${domain}/g" ${nginx_conf}
-  judge "Nginx 配置 修改"
+  print_ok "Nginx 配置 修改"
   systemctl restart nginx
   xray_install
 }
 
 function xray_install() {
   bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
-  judge "Xray 安装"
+  rint_ok "Xray 安装"
   configure_xray 
 }
 
 function configure_xray() {
   cd /usr/local/etc/xray/ && rm -rf config.json && wget -O config.json "https://raw.githubusercontent.com/voyku/xray/main/config.json"
-  judge "Xray配置修改"
+  rint_ok "Xray配置修改"
   restart_all
 }
 
 function restart_all() {
   systemctl enable xray && systemctl enable nginx && systemctl restart xray && systemctl reload nginx
-  judge "Xray和nginx重启成功"
+  rint_ok "Xray和nginx重启成功"
 }
 
 function certificate_renewal() {
@@ -52,7 +52,7 @@ function certificate_renewal() {
    sed -i "s/xxx/${domain}/g" ${cert_renewsh}
    chmod 755 /etc/ssl/private/cert_renew.sh
    echo -e "0 1 1 * *   bash /etc/ssl/private/xray-cert-renew.sh" >> /var/spool/cron/crontabs/root 
-   judge "已证书自动更新"
+   rint_ok "已证书自动更新"
 } 
 
 menu() {
