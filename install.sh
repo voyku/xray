@@ -51,7 +51,8 @@ function certificate_renewal() {
    cd /etc/ssl/private/ && wget -O cert_renew.sh https://raw.githubusercontent.com/voyku/xray/main/cert_renew.sh
    sed -i "s/xxx/${domain}/g" ${cert_renewsh}
    chmod 755 /etc/ssl/private/cert_renew.sh
-   judge "证书自动更新，输入crontab -e，添加0 1 1 * *   bash /etc/ssl/private/xray-cert-renew.sh到crontab "
+   echo -e "0 1 1 * *   bash /etc/ssl/private/xray-cert-renew.sh" >> /var/spool/cron/crontabs/root 
+   judge "已证书自动更新"
 } 
 
 menu() {
