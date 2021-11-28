@@ -31,19 +31,19 @@ function nginx_install() {
 
 function xray_install() {
   bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
-  rint_ok "Xray 安装"
+  print_ok "Xray 安装"
   configure_xray 
 }
 
 function configure_xray() {
   cd /usr/local/etc/xray/ && rm -rf config.json && wget -O config.json "https://raw.githubusercontent.com/voyku/xray/main/config.json"
-  rint_ok "Xray配置修改"
+  print_ok "Xray配置修改"
   restart_all
 }
 
 function restart_all() {
   systemctl enable xray && systemctl enable nginx && systemctl restart xray && systemctl reload nginx
-  rint_ok "Xray和nginx重启成功"
+  print_ok "Xray和nginx重启成功"
 }
 
 function certificate_renewal() {
@@ -52,7 +52,8 @@ function certificate_renewal() {
    sed -i "s/xxx/${domain}/g" ${cert_renewsh}
    chmod 755 /etc/ssl/private/cert_renew.sh
    echo -e "0 1 1 * *   bash /etc/ssl/private/xray-cert-renew.sh" >> /var/spool/cron/crontabs/root 
-   rint_ok "已证书自动更新"
+   print_ok "已证书自动更新"
+   print_ok "vless://b7662d12-d48a-4ab8-8834-9864a01592b3@$DOMAIN:443?flow=xtls-rprx-direct&encryption=none&security=xtls&type=tcp&headerType=none&host=$DOMAIN#$DOMAIN"
 } 
 
 menu() {
