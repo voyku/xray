@@ -1,4 +1,15 @@
- function install_xray() {
+# 字体颜色配置
+Green="\033[32m"
+Red="\033[31m"
+Yellow="\033[33m"
+Blue="\033[36m"
+Font="\033[0m"
+GreenBG="\033[42;37m"
+RedBG="\033[41;37m"
+OK="${Green}[OK]${Font}"
+ERROR="${Red}[ERROR]${Font}"
+
+function install_xray() {
   generate_certificate
 }
 
