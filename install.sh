@@ -27,7 +27,7 @@ function nginx_install() {
   apt update && apt install nginx -y
   mkdir -p /var/www/website/html
   cd /var/www/website/html/
-  git clone https://github.com/gcp5678/webxyar.git
+  wget -O xray_web.zip https://raw.githubusercontent.com/voyku/xray/main/xray_web.zip
   cd webxyar && unzip -o -d /var/www/website/html xray_web.zip
   mv /var/www/website/html/xray_web/* /var/www/website/html/
   cd /var/www/website/html/ && rm -rf webxyar && rm -rf xray_web
